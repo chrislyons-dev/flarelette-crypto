@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output/
+coverage-final.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary
+*.tmp
+.cache/
+
+# Internal docs
+CLAUDE.md
+.claude/
+notes/
