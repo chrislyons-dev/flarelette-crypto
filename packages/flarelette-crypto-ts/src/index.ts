@@ -41,3 +41,16 @@ export { encapsulateChannelKey, decapsulateChannelKey } from './channel.js'
 
 // Document encryption — symmetric layer (run per document / message)
 export { encryptDoc, decryptDoc } from './doc.js'
+
+// Keypair persistence — wrap/unwrap and KeyStore implementations
+export {
+  wrapKeyBundle,
+  unwrapKeyBundle,
+  openKeyStore,
+  openMemoryStore,
+  openIndexedDBStore,
+} from './store.js'
+export type { KeyStore } from './store.js'
+
+// Public key serialization for out-of-band sharing
+export { exportPublicBundle, importPublicBundle } from './serialize.js'

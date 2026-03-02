@@ -36,6 +36,16 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
                     technology "function"
                     tags "Code"
                 }
+                chrislyons_dev_flarelette_crypto__src__base64urlencode = component "src.base64urlEncode" {
+                    description "Base64url encode / decode. Uses btoa/atob — available in browsers, Cloudflare Workers, and Node.js 20+. No imports, no dependencies."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__base64urldecode = component "src.base64urlDecode" {
+                    description "Decode a base64url string to bytes. Accepts strings with or without padding. Throws on non-base64url characters."
+                    technology "function"
+                    tags "Code"
+                }
                 chrislyons_dev_flarelette_crypto__src__derivekey = component "src.deriveKey" {
                     description "Derive a key using HKDF-SHA512."
                     technology "function"
@@ -66,6 +76,49 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
                     tags "Code"
                 }
                 chrislyons_dev_flarelette_crypto__src__hybriddecapsulate = component "src.hybridDecapsulate" {
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__exportpublicbundle = component "src.exportPublicBundle" {
+                    description "Serialize the public portion of a keypair to a compact, shareable string. The returned string is safe to share over any channel (Signal, QR code, paste into a form). It contains only public key material."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__importpublicbundle = component "src.importPublicBundle" {
+                    description "Deserialize a public bundle string to a ChannelPublicKey. Validates the prefix and byte length. Throws on any malformed input — never returns a partial or zero-initialized key."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__serializekeypairs = component "src.serializeKeypairs" {
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__deserializekeypairs = component "src.deserializeKeypairs" {
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__wrapkeybundle = component "src.wrapKeyBundle" {
+                    description "Encrypt a keypair bundle with a wrapping key. The wrapping key is used as IKM for HKDF — it must be at least 32 bytes. Typically derived from a user passphrase (Argon2id/scrypt) or from another key exchange. Do not use a low-entropy string directly. Returns a JSON-serialisable object — all byte fields are base64url strings."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__unwrapkeybundle = component "src.unwrapKeyBundle" {
+                    description "Decrypt a keypair bundle produced by wrapKeyBundle(). Verifies the HMAC-SHA512 MAC in constant time before attempting decryption. Throws on MAC failure, wrong key, or any corrupt data — never returns a partially recovered keypair."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__openmemorystore = component "src.openMemoryStore" {
+                    description "In-memory KeyStore backed by a Map. Stores the opaque ChannelKeypairs handle directly — no serialization overhead. Use in Node.js, Cloudflare Workers, and tests. Data does not persist across process restarts."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__openindexeddbstore = component "src.openIndexedDBStore" {
+                    description "IndexedDB-backed KeyStore. Serializes keypairs to 4,800-byte ArrayBuffers and stores them in an IndexedDB object store. Data persists across page reloads. Uses lazy connection initialisation — the DB is opened on first use and the connection is reused for subsequent operations. Object store name: 'keypairs' DB version: 1"
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__src__openkeystore = component "src.openKeyStore" {
+                    description "Open the best available KeyStore for the current environment. Returns an IndexedDB store if `indexedDB` is available (browsers), or a memory store (Node.js, Cloudflare Workers)."
                     technology "function"
                     tags "Code"
                 }
@@ -145,6 +198,8 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
             include chrislyons_dev_flarelette_crypto__src__generatechannelkey
             include chrislyons_dev_flarelette_crypto__src__encapsulatechannelkey
             include chrislyons_dev_flarelette_crypto__src__decapsulatechannelkey
+            include chrislyons_dev_flarelette_crypto__src__base64urlencode
+            include chrislyons_dev_flarelette_crypto__src__base64urldecode
             include chrislyons_dev_flarelette_crypto__src__derivekey
             include chrislyons_dev_flarelette_crypto__src__encryptdoc
             include chrislyons_dev_flarelette_crypto__src__decryptdoc
@@ -152,6 +207,15 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
             include chrislyons_dev_flarelette_crypto__src__getpublickey
             include chrislyons_dev_flarelette_crypto__src__hybridencapsulate
             include chrislyons_dev_flarelette_crypto__src__hybriddecapsulate
+            include chrislyons_dev_flarelette_crypto__src__exportpublicbundle
+            include chrislyons_dev_flarelette_crypto__src__importpublicbundle
+            include chrislyons_dev_flarelette_crypto__src__serializekeypairs
+            include chrislyons_dev_flarelette_crypto__src__deserializekeypairs
+            include chrislyons_dev_flarelette_crypto__src__wrapkeybundle
+            include chrislyons_dev_flarelette_crypto__src__unwrapkeybundle
+            include chrislyons_dev_flarelette_crypto__src__openmemorystore
+            include chrislyons_dev_flarelette_crypto__src__openindexeddbstore
+            include chrislyons_dev_flarelette_crypto__src__openkeystore
             include chrislyons_dev_flarelette_crypto__src__toarraybuffer
             include chrislyons_dev_flarelette_crypto__src__importaeskey
             include chrislyons_dev_flarelette_crypto__src__aesgcmencrypt

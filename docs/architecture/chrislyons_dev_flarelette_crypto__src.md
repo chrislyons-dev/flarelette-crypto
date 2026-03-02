@@ -24,7 +24,7 @@
 ### Code Elements
 
 <details>
-<summary><strong>20 code element(s)</strong></summary>
+<summary><strong>31 code element(s)</strong></summary>
 
 #### Classes
 
@@ -105,6 +105,43 @@ causing AES-GCM decryption to fail.
 **Parameters:**
 
 - `encapsulation`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelEncapsulation</code> — Produced by encapsulateChannelKey() for this recipient.- `keypairs`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs</code> — The recipient's full keypair (must include the secret key).- `channelId`: <code>string</code> — Must match the channelId used during encapsulation.
+
+---
+
+##### `base64urlEncode()`
+
+Base64url encode / decode.
+
+Uses btoa/atob — available in browsers, Cloudflare Workers, and Node.js 20+.
+No imports, no dependencies.
+
+| Field          | Value      |
+| -------------- | ---------- | --- | ------------ | ------------------------------------------------------------------------------------ |
+| **Type**       | `function` |
+| **Visibility** | `public`   |
+| **Returns**    | `string`   |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/codec.ts:11` |
+
+**Parameters:**
+
+- `bytes`: <code>Uint8Array<ArrayBufferLike></code>
+
+---
+
+##### `base64urlDecode()`
+
+Decode a base64url string to bytes.
+
+Accepts strings with or without padding. Throws on non-base64url characters.
+
+| Field          | Value                         |
+| -------------- | ----------------------------- | --- | ------------ | ------------------------------------------------------------------------------------ |
+| **Type**       | `function`                    |
+| **Visibility** | `public`                      |
+| **Returns**    | `Uint8Array<ArrayBufferLike>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/codec.ts:24` |
+
+**Parameters:**
+
+- `s`: <code>string</code>
 
 ---
 
@@ -226,6 +263,174 @@ It contains only public key material — no secret key bytes.
 **Parameters:**
 
 - `kemCt`: <code>Uint8Array<ArrayBufferLike></code>- `dhEphemeral`: <code>Uint8Array<ArrayBufferLike></code>- `keypairs`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs</code>
+
+---
+
+##### `exportPublicBundle()`
+
+Serialize the public portion of a keypair to a compact, shareable string.
+
+The returned string is safe to share over any channel (Signal, QR code,
+paste into a form). It contains only public key material.
+
+| Field          | Value      |
+| -------------- | ---------- | --- | ------------ | ---------------------------------------------------------------------------------------- |
+| **Type**       | `function` |
+| **Visibility** | `public`   |
+| **Returns**    | `string`   |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts:35` |
+
+**Parameters:**
+
+- `keypairs`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs</code>
+
+---
+
+##### `importPublicBundle()`
+
+Deserialize a public bundle string to a ChannelPublicKey.
+
+Validates the prefix and byte length. Throws on any malformed input —
+never returns a partial or zero-initialized key.
+
+| Field          | Value                                                                                                     |
+| -------------- | --------------------------------------------------------------------------------------------------------- | --- | ------------ | ---------------------------------------------------------------------------------------- |
+| **Type**       | `function`                                                                                                |
+| **Visibility** | `public`                                                                                                  |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelPublicKey` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts:49` |
+
+**Parameters:**
+
+- `encoded`: <code>string</code>
+
+---
+
+##### `serializeKeypairs()`
+
+| Field          | Value                         |
+| -------------- | ----------------------------- | --- | ------------ | ------------------------------------------------------------------------------------ |
+| **Type**       | `function`                    |
+| **Visibility** | `private`                     |
+| **Returns**    | `Uint8Array<ArrayBufferLike>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:58` |
+
+**Parameters:**
+
+- `kp`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs</code>
+
+---
+
+##### `deserializeKeypairs()`
+
+| Field          | Value                                                                                                    |
+| -------------- | -------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------ |
+| **Type**       | `function`                                                                                               |
+| **Visibility** | `private`                                                                                                |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:72` |
+
+**Parameters:**
+
+- `bytes`: <code>Uint8Array<ArrayBufferLike></code>
+
+---
+
+##### `wrapKeyBundle()`
+
+Encrypt a keypair bundle with a wrapping key.
+
+The wrapping key is used as IKM for HKDF — it must be at least 32 bytes.
+Typically derived from a user passphrase (Argon2id/scrypt) or from another
+key exchange. Do not use a low-entropy string directly.
+
+Returns a JSON-serialisable object — all byte fields are base64url strings.
+
+| Field          | Value      |
+| -------------- | ---------- | --- | ----------- | --------------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
+| **Type**       | `function` |
+| **Visibility** | `public`   |
+| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").WrappedBundle>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:104` |
+
+**Parameters:**
+
+- `keypairs`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs</code>- `wrappingKey`: <code>Uint8Array<ArrayBufferLike></code>
+
+---
+
+##### `unwrapKeyBundle()`
+
+Decrypt a keypair bundle produced by wrapKeyBundle().
+
+Verifies the HMAC-SHA512 MAC in constant time before attempting decryption.
+Throws on MAC failure, wrong key, or any corrupt data — never returns a
+partially recovered keypair.
+
+| Field          | Value      |
+| -------------- | ---------- | --- | ----------- | ----------------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
+| **Type**       | `function` |
+| **Visibility** | `public`   |
+| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:134` |
+
+**Parameters:**
+
+- `wrapped`: <code>import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").WrappedBundle</code>- `wrappingKey`: <code>Uint8Array<ArrayBufferLike></code>
+
+---
+
+##### `openMemoryStore()`
+
+In-memory KeyStore backed by a Map.
+
+Stores the opaque ChannelKeypairs handle directly — no serialization overhead.
+Use in Node.js, Cloudflare Workers, and tests.
+Data does not persist across process restarts.
+
+| Field          | Value                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
+| **Type**       | `function`                                                                                        |
+| **Visibility** | `public`                                                                                          |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:192` |
+
+---
+
+##### `openIndexedDBStore()`
+
+IndexedDB-backed KeyStore.
+
+Serializes keypairs to 4,800-byte ArrayBuffers and stores them in an
+IndexedDB object store. Data persists across page reloads.
+
+Uses lazy connection initialisation — the DB is opened on first use and
+the connection is reused for subsequent operations.
+
+Object store name: 'keypairs'
+DB version: 1
+
+| Field          | Value                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
+| **Type**       | `function`                                                                                        |
+| **Visibility** | `public`                                                                                          |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:227` |
+
+**Parameters:**
+
+- `dbName`: <code>string</code>
+
+---
+
+##### `openKeyStore()`
+
+Open the best available KeyStore for the current environment.
+
+Returns an IndexedDB store if `indexedDB` is available (browsers), or
+a memory store (Node.js, Cloudflare Workers).
+
+| Field          | Value                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
+| **Type**       | `function`                                                                                        |
+| **Visibility** | `public`                                                                                          |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:317` |
+
+**Parameters:**
+
+- `options`: <code>{ dbName?: string; }</code>
 
 ---
 

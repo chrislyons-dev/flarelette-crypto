@@ -113,6 +113,50 @@
       "lineNumber": 98
     },
     {
+      "description": "Base64url encode / decode.\n\nUses btoa/atob — available in browsers, Cloudflare Workers, and Node.js 20+.\nNo imports, no dependencies.",
+      "id": "chrislyons_dev_flarelette_crypto__src__base64urlencode",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "base64urlEncode",
+      "type": "function",
+      "documentation": {
+        "summary": "Base64url encode / decode.\n\nUses btoa/atob — available in browsers, Cloudflare Workers, and Node.js 20+.\nNo imports, no dependencies."
+      },
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/codec.ts",
+      "lineNumber": 11
+    },
+    {
+      "description": "Decode a base64url string to bytes.\n\nAccepts strings with or without padding. Throws on non-base64url characters.",
+      "id": "chrislyons_dev_flarelette_crypto__src__base64urldecode",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "base64urlDecode",
+      "type": "function",
+      "documentation": {
+        "summary": "Decode a base64url string to bytes.\n\nAccepts strings with or without padding. Throws on non-base64url characters."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/codec.ts",
+      "lineNumber": 24
+    },
+    {
       "description": "Derive a key using HKDF-SHA512.",
       "id": "chrislyons_dev_flarelette_crypto__src__derivekey",
       "componentId": "chrislyons_dev_flarelette_crypto__src",
@@ -289,6 +333,201 @@
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
       "lineNumber": 105
+    },
+    {
+      "description": "Serialize the public portion of a keypair to a compact, shareable string.\n\nThe returned string is safe to share over any channel (Signal, QR code,\npaste into a form). It contains only public key material.",
+      "id": "chrislyons_dev_flarelette_crypto__src__exportpublicbundle",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "exportPublicBundle",
+      "type": "function",
+      "documentation": {
+        "summary": "Serialize the public portion of a keypair to a compact, shareable string.\n\nThe returned string is safe to share over any channel (Signal, QR code,\npaste into a form). It contains only public key material."
+      },
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "lineNumber": 35
+    },
+    {
+      "description": "Deserialize a public bundle string to a ChannelPublicKey.\n\nValidates the prefix and byte length. Throws on any malformed input —\nnever returns a partial or zero-initialized key.",
+      "id": "chrislyons_dev_flarelette_crypto__src__importpublicbundle",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "importPublicBundle",
+      "type": "function",
+      "documentation": {
+        "summary": "Deserialize a public bundle string to a ChannelPublicKey.\n\nValidates the prefix and byte length. Throws on any malformed input —\nnever returns a partial or zero-initialized key."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelPublicKey",
+      "parameters": [
+        {
+          "name": "encoded",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "lineNumber": 49
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src__serializekeypairs",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "serializeKeypairs",
+      "type": "function",
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [
+        {
+          "name": "kp",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 58
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src__deserializekeypairs",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "deserializeKeypairs",
+      "type": "function",
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 72
+    },
+    {
+      "description": "Encrypt a keypair bundle with a wrapping key.\n\nThe wrapping key is used as IKM for HKDF — it must be at least 32 bytes.\nTypically derived from a user passphrase (Argon2id/scrypt) or from another\nkey exchange. Do not use a low-entropy string directly.\n\nReturns a JSON-serialisable object — all byte fields are base64url strings.",
+      "id": "chrislyons_dev_flarelette_crypto__src__wrapkeybundle",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "wrapKeyBundle",
+      "type": "function",
+      "documentation": {
+        "summary": "Encrypt a keypair bundle with a wrapping key.\n\nThe wrapping key is used as IKM for HKDF — it must be at least 32 bytes.\nTypically derived from a user passphrase (Argon2id/scrypt) or from another\nkey exchange. Do not use a low-entropy string directly.\n\nReturns a JSON-serialisable object — all byte fields are base64url strings."
+      },
+      "returnType": "Promise<import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").WrappedBundle>",
+      "parameters": [
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        },
+        {
+          "name": "wrappingKey",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 104
+    },
+    {
+      "description": "Decrypt a keypair bundle produced by wrapKeyBundle().\n\nVerifies the HMAC-SHA512 MAC in constant time before attempting decryption.\nThrows on MAC failure, wrong key, or any corrupt data — never returns a\npartially recovered keypair.",
+      "id": "chrislyons_dev_flarelette_crypto__src__unwrapkeybundle",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "unwrapKeyBundle",
+      "type": "function",
+      "documentation": {
+        "summary": "Decrypt a keypair bundle produced by wrapKeyBundle().\n\nVerifies the HMAC-SHA512 MAC in constant time before attempting decryption.\nThrows on MAC failure, wrong key, or any corrupt data — never returns a\npartially recovered keypair."
+      },
+      "returnType": "Promise<import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs>",
+      "parameters": [
+        {
+          "name": "wrapped",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").WrappedBundle",
+          "optional": false
+        },
+        {
+          "name": "wrappingKey",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 134
+    },
+    {
+      "description": "In-memory KeyStore backed by a Map.\n\nStores the opaque ChannelKeypairs handle directly — no serialization overhead.\nUse in Node.js, Cloudflare Workers, and tests.\nData does not persist across process restarts.",
+      "id": "chrislyons_dev_flarelette_crypto__src__openmemorystore",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "openMemoryStore",
+      "type": "function",
+      "documentation": {
+        "summary": "In-memory KeyStore backed by a Map.\n\nStores the opaque ChannelKeypairs handle directly — no serialization overhead.\nUse in Node.js, Cloudflare Workers, and tests.\nData does not persist across process restarts."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store\").KeyStore",
+      "parameters": [],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 192
+    },
+    {
+      "description": "IndexedDB-backed KeyStore.\n\nSerializes keypairs to 4,800-byte ArrayBuffers and stores them in an\nIndexedDB object store. Data persists across page reloads.\n\nUses lazy connection initialisation — the DB is opened on first use and\nthe connection is reused for subsequent operations.\n\nObject store name: 'keypairs'\nDB version: 1",
+      "id": "chrislyons_dev_flarelette_crypto__src__openindexeddbstore",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "openIndexedDBStore",
+      "type": "function",
+      "documentation": {
+        "summary": "IndexedDB-backed KeyStore.\n\nSerializes keypairs to 4,800-byte ArrayBuffers and stores them in an\nIndexedDB object store. Data persists across page reloads.\n\nUses lazy connection initialisation — the DB is opened on first use and\nthe connection is reused for subsequent operations.\n\nObject store name: 'keypairs'\nDB version: 1"
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store\").KeyStore",
+      "parameters": [
+        {
+          "name": "dbName",
+          "type": "string",
+          "optional": true,
+          "defaultValue": "'flarelette-crypto'"
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 227
+    },
+    {
+      "description": "Open the best available KeyStore for the current environment.\n\nReturns an IndexedDB store if `indexedDB` is available (browsers), or\na memory store (Node.js, Cloudflare Workers).",
+      "id": "chrislyons_dev_flarelette_crypto__src__openkeystore",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "openKeyStore",
+      "type": "function",
+      "documentation": {
+        "summary": "Open the best available KeyStore for the current environment.\n\nReturns an IndexedDB store if `indexedDB` is available (browsers), or\na memory store (Node.js, Cloudflare Workers)."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store\").KeyStore",
+      "parameters": [
+        {
+          "name": "options",
+          "type": "{ dbName?: string; }",
+          "optional": true
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "lineNumber": 317
     },
     {
       "description": "Convert a Uint8Array to a plain ArrayBuffer.\n\nWeb Crypto requires ArrayBuffer (not ArrayBufferLike) for all key and data\nparameters. Noble functions return Uint8Array<ArrayBufferLike>, which may\nbe backed by a SharedArrayBuffer. This ensures we always pass a plain\nArrayBuffer to satisfy both the DOM types and runtime requirements.",
@@ -529,10 +768,10 @@
   "containerRelationships": [],
   "componentRelationships": [
     {
-      "description": "ChannelEncapsulation | ChannelPublicKey | ChannelKeypairs | EncryptedDoc | _getKeypairInternal",
+      "description": "ChannelEncapsulation | ChannelPublicKey | ChannelKeypairs | EncryptedDoc | _getKeypairInternal | WrappedBundle",
       "source": "chrislyons_dev_flarelette_crypto__src",
       "destination": "./types.js",
-      "stereotype": "type-import | import | type-import | import | import | type-import"
+      "stereotype": "type-import | import | type-import | import | import | type-import | type-import | type-import | type-import | import | import"
     },
     {
       "description": "hybridEncapsulate | hybridDecapsulate",
@@ -739,6 +978,138 @@
       "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
       "destination": "./types.js:ChannelPublicKey",
       "stereotype": "type-import"
+    },
+    {
+      "description": "imports ChannelPublicKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./types.js:ChannelPublicKey",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports ChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./types.js:ChannelKeypairs",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports getPublicKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./kem.js:getPublicKey",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports MLKEM_PUBLIC_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./kem.js:MLKEM_PUBLIC_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports DH_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./kem.js:DH_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlEncode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./codec.js:base64urlEncode",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlDecode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/serialize.ts",
+      "destination": "./codec.js:base64urlDecode",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports WrappedBundle",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./types.js:WrappedBundle",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports ChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./types.js:ChannelKeypairs",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports _getKeypairInternal",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./types.js:_getKeypairInternal",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports MLKEM_PUBLIC_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./kem.js:MLKEM_PUBLIC_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports MLKEM_SECRET_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./kem.js:MLKEM_SECRET_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports DH_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./kem.js:DH_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports deriveKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./derive.js:deriveKey",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmEncrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:aesGcmEncrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmDecrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:aesGcmDecrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hmacSha512",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:hmacSha512",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports constantTimeEqual",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:constantTimeEqual",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports concatBytes",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:concatBytes",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports randomIv",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./symmetric.js:randomIv",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlEncode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./codec.js:base64urlEncode",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlDecode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
+      "destination": "./codec.js:base64urlDecode",
+      "stereotype": "import"
     },
     {
       "description": "imports hmac",
