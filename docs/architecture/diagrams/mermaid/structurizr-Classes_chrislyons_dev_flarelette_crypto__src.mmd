@@ -1,0 +1,52 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [" "]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 2 [" "]
+      style 2 fill:#ffffff,stroke:#2e6295,color:#2e6295
+
+      10("<div style='font-weight: bold'>src.generateChannelKeypairs</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Generate a hybrid ML-KEM-1024<br />+ X25519 keypair. Both key<br />types are generated with<br />cryptographically random<br />seeds. Returns an opaque<br />ChannelKeypairs handle —<br />internal key bytes are not<br />accessible to application<br />code. Use getPublicKey() to<br />obtain the shareable public<br />portion and wrapKeyBundle()<br />to persist the full keypair.</div>")
+      style 10 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      11("<div style='font-weight: bold'>src.getPublicKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Extract the public portion of<br />a keypair for sharing with<br />recipients. The returned<br />ChannelPublicKey is safe to<br />share out-of-band (Signal, QR<br />code, etc.). It contains only<br />public key material — no<br />secret key bytes.</div>")
+      style 11 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      12("<div style='font-weight: bold'>src.hybridEncapsulate</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div>")
+      style 12 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      13("<div style='font-weight: bold'>src.hybridDecapsulate</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div>")
+      style 13 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      14("<div style='font-weight: bold'>src.toArrayBuffer</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Convert a Uint8Array to a<br />plain ArrayBuffer. Web Crypto<br />requires ArrayBuffer (not<br />ArrayBufferLike) for all key<br />and data parameters. Noble<br />functions return<br />Uint8Array<ArrayBufferLike>,<br />which may be backed by a<br />SharedArrayBuffer. This<br />ensures we always pass a<br />plain ArrayBuffer to satisfy<br />both the DOM types and<br />runtime requirements.</div>")
+      style 14 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      15("<div style='font-weight: bold'>src.importAesKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div>")
+      style 15 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      16("<div style='font-weight: bold'>src.aesGcmEncrypt</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>AES-256-GCM encrypt. Returns<br />ciphertext with the 16-byte<br />GCM auth tag appended. The<br />caller is responsible for<br />generating a unique 12-byte<br />IV per encryption. Reusing an<br />IV with the same key is<br />catastrophic — this function<br />does not enforce uniqueness;<br />callers must generate IVs via<br />randomIv().</div>")
+      style 16 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      17("<div style='font-weight: bold'>src.aesGcmDecrypt</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>AES-256-GCM decrypt. Throws<br />if the GCM auth tag is<br />invalid. This is a secondary<br />authentication check; callers<br />should validate the outer<br />HMAC-SHA512 MAC before<br />calling this.</div>")
+      style 17 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      18("<div style='font-weight: bold'>src.hmacSha512</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Compute HMAC-SHA512. Used as<br />the outer MAC in<br />Encrypt-then-MAC. The message<br />should include both the nonce<br />and the ciphertext to prevent<br />nonce-swapping attacks.</div>")
+      style 18 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      19("<div style='font-weight: bold'>src.constantTimeEqual</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Constant-time byte equality<br />check. Always use this — not<br />===, not a manual loop — when<br />comparing MACs or secrets.<br />Timing-safe comparison<br />prevents MAC oracle attacks.</div>")
+      style 19 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      20("<div style='font-weight: bold'>src.randomIv</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Generate a cryptographically<br />random 12-byte IV for<br />AES-GCM.</div>")
+      style 20 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      21("<div style='font-weight: bold'>src.concatBytes</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Concatenate Uint8Arrays into<br />a single Uint8Array.</div>")
+      style 21 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      22("<div style='font-weight: bold'>src._getKeypairInternal</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div>")
+      style 22 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      23("<div style='font-weight: bold'>src.ChannelKeypairs</div><div style='font-size: 70%; margin-top: 0px'>[Component: class]</div><div style='font-size: 80%; margin-top:10px'>An opaque handle wrapping a<br />hybrid ML-KEM-1024 + X25519<br />keypair. Create via<br />generateChannelKeypairs().<br />Persist via<br />wrapKeyBundle()/unwrapKeyBundle().<br />Do not inspect or construct<br />directly — internal layout is<br />not guaranteed.</div>")
+      style 23 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      4("<div style='font-weight: bold'>src.generateChannelKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Generate a random 32-byte<br />channel key. Pass this to<br />encapsulateChannelKey() for<br />each channel member, then use<br />it with encryptDoc() to<br />encrypt documents. Keep it in<br />memory only — never serialise<br />it. To add a new member<br />later, call<br />encapsulateChannelKey() again<br />with the same key.</div>")
+      style 4 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      5("<div style='font-weight: bold'>src.encapsulateChannelKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Wrap a channel key for one<br />recipient using hybrid<br />ML-KEM-1024 + X25519.<br />Security properties: -<br />Channel binding: a returned<br />ChannelEncapsulation is only<br />valid for the given<br />channelId. - Recipient<br />binding: only the holder of<br />the matching ChannelKeypairs<br />secret key can recover the<br />channel key via<br />decapsulateChannelKey(). -<br />Forward secrecy (classical):<br />ephemeral X25519 key is<br />discarded after<br />encapsulation.</div>")
+      style 5 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      6("<div style='font-weight: bold'>src.decapsulateChannelKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Recover a channel key from a<br />ChannelEncapsulation using<br />the recipient's secret key.<br />Verifies channel binding —<br />decapsulation fails if the<br />channelId does not match the<br />one used during<br />encapsulateChannelKey(). This<br />is enforced cryptographically<br />via the HKDF info parameter:<br />a mismatched channelId<br />produces a different wrap<br />key, causing AES-GCM<br />decryption to fail.</div>")
+      style 6 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      7("<div style='font-weight: bold'>src.deriveKey</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Derive a key using<br />HKDF-SHA512.</div>")
+      style 7 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      8("<div style='font-weight: bold'>src.encryptDoc</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Encrypt plaintext with a<br />channel key. The channel key<br />(masterKey) is never<br />serialised by this function —<br />it is the caller's<br />responsibility to keep it in<br />memory only and distribute it<br />via encapsulateChannelKey().<br />Any byte sequence (document,<br />metadata blob, message body)<br />can be encrypted as a single<br />call; encrypt metadata and<br />content together in a single<br />plaintext rather than<br />separately.</div>")
+      style 8 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      9("<div style='font-weight: bold'>src.decryptDoc</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Decrypt a document encrypted<br />by encryptDoc(). Verifies the<br />HMAC-SHA512 MAC in constant<br />time before attempting<br />decryption. Throws<br />immediately on MAC failure —<br />no partial decryption, no<br />timing oracle.</div>")
+      style 9 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+    end
+
+  end

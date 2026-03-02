@@ -1,0 +1,188 @@
+@startuml
+set separator none
+title flarelette-crypto - @chrislyons-dev/flarelette-crypto - Components
+
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 10
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+  defaultFontName "Arial"
+}
+
+hide stereotype
+
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcChannelKeypairs>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.src_getKeypairInternal>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmDecrypt>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmEncrypt>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcconcatBytes>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcconstantTimeEqual>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecapsulateChannelKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecryptDoc>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcderiveKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcencapsulateChannelKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcencryptDoc>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKeypairs>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgetPublicKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srchmacSha512>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridDecapsulate>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridEncapsulate>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcimportAesKey>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srcrandomIv>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.srctoArrayBuffer>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  BorderColor #2e6295
+  FontColor #2e6295
+  shadowing false
+}
+
+rectangle "@chrislyons-dev/flarelette-crypto\n<size:10>[Container: Service]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  rectangle "==src.generateChannelKeypairs\n<size:10>[Component: function]</size>\n\nGenerate a hybrid ML-KEM-1024 + X25519 keypair. Both key types are generated with cryptographically random seeds. Returns an opaque ChannelKeypairs handle — internal key bytes are not accessible to application code. Use getPublicKey() to obtain the shareable public portion and wrapKeyBundle() to persist the full keypair." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKeypairs>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKeypairs
+  rectangle "==src.getPublicKey\n<size:10>[Component: function]</size>\n\nExtract the public portion of a keypair for sharing with recipients. The returned ChannelPublicKey is safe to share out-of-band (Signal, QR code, etc.). It contains only public key material — no secret key bytes." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgetPublicKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcgetPublicKey
+  rectangle "==src.hybridEncapsulate\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridEncapsulate>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridEncapsulate
+  rectangle "==src.hybridDecapsulate\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridDecapsulate>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srchybridDecapsulate
+  rectangle "==src.toArrayBuffer\n<size:10>[Component: function]</size>\n\nConvert a Uint8Array to a plain ArrayBuffer. Web Crypto requires ArrayBuffer (not ArrayBufferLike) for all key and data parameters. Noble functions return Uint8Array<ArrayBufferLike>, which may be backed by a SharedArrayBuffer. This ensures we always pass a plain ArrayBuffer to satisfy both the DOM types and runtime requirements." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srctoArrayBuffer>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srctoArrayBuffer
+  rectangle "==src.importAesKey\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcimportAesKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcimportAesKey
+  rectangle "==src.aesGcmEncrypt\n<size:10>[Component: function]</size>\n\nAES-256-GCM encrypt. Returns ciphertext with the 16-byte GCM auth tag appended. The caller is responsible for generating a unique 12-byte IV per encryption. Reusing an IV with the same key is catastrophic — this function does not enforce uniqueness; callers must generate IVs via randomIv()." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmEncrypt>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmEncrypt
+  rectangle "==src.aesGcmDecrypt\n<size:10>[Component: function]</size>\n\nAES-256-GCM decrypt. Throws if the GCM auth tag is invalid. This is a secondary authentication check; callers should validate the outer HMAC-SHA512 MAC before calling this." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmDecrypt>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcaesGcmDecrypt
+  rectangle "==src.hmacSha512\n<size:10>[Component: function]</size>\n\nCompute HMAC-SHA512. Used as the outer MAC in Encrypt-then-MAC. The message should include both the nonce and the ciphertext to prevent nonce-swapping attacks." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srchmacSha512>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srchmacSha512
+  rectangle "==src.constantTimeEqual\n<size:10>[Component: function]</size>\n\nConstant-time byte equality check. Always use this — not ===, not a manual loop — when comparing MACs or secrets. Timing-safe comparison prevents MAC oracle attacks." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcconstantTimeEqual>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcconstantTimeEqual
+  rectangle "==src.randomIv\n<size:10>[Component: function]</size>\n\nGenerate a cryptographically random 12-byte IV for AES-GCM." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcrandomIv>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcrandomIv
+  rectangle "==src.concatBytes\n<size:10>[Component: function]</size>\n\nConcatenate Uint8Arrays into a single Uint8Array." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcconcatBytes>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcconcatBytes
+  rectangle "==src._getKeypairInternal\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.src_getKeypairInternal>> as flarelettecrypto.chrislyonsdevflarelettecrypto.src_getKeypairInternal
+  rectangle "==src.ChannelKeypairs\n<size:10>[Component: class]</size>\n\nAn opaque handle wrapping a hybrid ML-KEM-1024 + X25519 keypair. Create via generateChannelKeypairs(). Persist via wrapKeyBundle()/unwrapKeyBundle(). Do not inspect or construct directly — internal layout is not guaranteed." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcChannelKeypairs>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcChannelKeypairs
+  rectangle "==src.generateChannelKey\n<size:10>[Component: function]</size>\n\nGenerate a random 32-byte channel key. Pass this to encapsulateChannelKey() for each channel member, then use it with encryptDoc() to encrypt documents. Keep it in memory only — never serialise it. To add a new member later, call encapsulateChannelKey() again with the same key." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcgenerateChannelKey
+  rectangle "==src.encapsulateChannelKey\n<size:10>[Component: function]</size>\n\nWrap a channel key for one recipient using hybrid ML-KEM-1024 + X25519. Security properties: - Channel binding: a returned ChannelEncapsulation is only valid for the given channelId. - Recipient binding: only the holder of the matching ChannelKeypairs secret key can recover the channel key via decapsulateChannelKey(). - Forward secrecy (classical): ephemeral X25519 key is discarded after encapsulation." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcencapsulateChannelKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcencapsulateChannelKey
+  rectangle "==src.decapsulateChannelKey\n<size:10>[Component: function]</size>\n\nRecover a channel key from a ChannelEncapsulation using the recipient's secret key. Verifies channel binding — decapsulation fails if the channelId does not match the one used during encapsulateChannelKey(). This is enforced cryptographically via the HKDF info parameter: a mismatched channelId produces a different wrap key, causing AES-GCM decryption to fail." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecapsulateChannelKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecapsulateChannelKey
+  rectangle "==src.deriveKey\n<size:10>[Component: function]</size>\n\nDerive a key using HKDF-SHA512." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcderiveKey>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcderiveKey
+  rectangle "==src.encryptDoc\n<size:10>[Component: function]</size>\n\nEncrypt plaintext with a channel key. The channel key (masterKey) is never serialised by this function — it is the caller's responsibility to keep it in memory only and distribute it via encapsulateChannelKey(). Any byte sequence (document, metadata blob, message body) can be encrypted as a single call; encrypt metadata and content together in a single plaintext rather than separately." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcencryptDoc>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcencryptDoc
+  rectangle "==src.decryptDoc\n<size:10>[Component: function]</size>\n\nDecrypt a document encrypted by encryptDoc(). Verifies the HMAC-SHA512 MAC in constant time before attempting decryption. Throws immediately on MAC failure — no partial decryption, no timing oracle." <<flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecryptDoc>> as flarelettecrypto.chrislyonsdevflarelettecrypto.srcdecryptDoc
+}
+
+@enduml

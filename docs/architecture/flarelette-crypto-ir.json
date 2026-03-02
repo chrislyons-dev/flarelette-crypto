@@ -1,0 +1,763 @@
+{
+  "version": "1.0",
+  "system": {
+    "description": "Post-quantum hybrid envelope encryption library",
+    "name": "flarelette-crypto"
+  },
+  "actors": [],
+  "containers": [
+    {
+      "description": "Post-quantum hybrid envelope encryption for Cloudflare Workers, browsers, and Node.js",
+      "tags": ["Auto-generated"],
+      "id": "chrislyons_dev_flarelette_crypto",
+      "name": "@chrislyons-dev/flarelette-crypto",
+      "type": "Service",
+      "layer": "Application"
+    }
+  ],
+  "components": [
+    {
+      "description": "Component inferred from directory: src",
+      "id": "chrislyons_dev_flarelette_crypto__src",
+      "containerId": "chrislyons_dev_flarelette_crypto",
+      "name": "src",
+      "type": "module"
+    }
+  ],
+  "code": [
+    {
+      "description": "Generate a random 32-byte channel key.\n\nPass this to encapsulateChannelKey() for each channel member, then use it with\nencryptDoc() to encrypt documents. Keep it in memory only — never serialise it.\nTo add a new member later, call encapsulateChannelKey() again with the same key.",
+      "id": "chrislyons_dev_flarelette_crypto__src__generatechannelkey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "generateChannelKey",
+      "type": "function",
+      "documentation": {
+        "summary": "Generate a random 32-byte channel key.\n\nPass this to encapsulateChannelKey() for each channel member, then use it with\nencryptDoc() to encrypt documents. Keep it in memory only — never serialise it.\nTo add a new member later, call encapsulateChannelKey() again with the same key."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "lineNumber": 29
+    },
+    {
+      "description": "Wrap a channel key for one recipient using hybrid ML-KEM-1024 + X25519.\n\nSecurity properties:\n- Channel binding: a returned ChannelEncapsulation is only valid for the given channelId.\n- Recipient binding: only the holder of the matching ChannelKeypairs secret key can\n  recover the channel key via decapsulateChannelKey().\n- Forward secrecy (classical): ephemeral X25519 key is discarded after encapsulation.",
+      "id": "chrislyons_dev_flarelette_crypto__src__encapsulatechannelkey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "encapsulateChannelKey",
+      "type": "function",
+      "documentation": {
+        "summary": "Wrap a channel key for one recipient using hybrid ML-KEM-1024 + X25519.\n\nSecurity properties:\n- Channel binding: a returned ChannelEncapsulation is only valid for the given channelId.\n- Recipient binding: only the holder of the matching ChannelKeypairs secret key can\n  recover the channel key via decapsulateChannelKey().\n- Forward secrecy (classical): ephemeral X25519 key is discarded after encapsulation."
+      },
+      "returnType": "Promise<import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelEncapsulation>",
+      "parameters": [
+        {
+          "name": "channelKey",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "description": "32-byte random key shared among channel members. Generate with\ngenerateChannelKey(). This value is never serialised by this library.",
+          "optional": false
+        },
+        {
+          "name": "recipient",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelPublicKey",
+          "description": "The recipient's public key, obtained from getPublicKey() or\nimportPublicBundle() (Phase 2).",
+          "optional": false
+        },
+        {
+          "name": "channelId",
+          "type": "string",
+          "description": "Stable identifier for the channel (e.g. UUID or database row ID).\nMust match exactly when calling decapsulateChannelKey().",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "lineNumber": 55
+    },
+    {
+      "description": "Recover a channel key from a ChannelEncapsulation using the recipient's secret key.\n\nVerifies channel binding — decapsulation fails if the channelId does not match\nthe one used during encapsulateChannelKey(). This is enforced cryptographically\nvia the HKDF info parameter: a mismatched channelId produces a different wrap key,\ncausing AES-GCM decryption to fail.",
+      "id": "chrislyons_dev_flarelette_crypto__src__decapsulatechannelkey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "decapsulateChannelKey",
+      "type": "function",
+      "documentation": {
+        "summary": "Recover a channel key from a ChannelEncapsulation using the recipient's secret key.\n\nVerifies channel binding — decapsulation fails if the channelId does not match\nthe one used during encapsulateChannelKey(). This is enforced cryptographically\nvia the HKDF info parameter: a mismatched channelId produces a different wrap key,\ncausing AES-GCM decryption to fail."
+      },
+      "returnType": "Promise<Uint8Array<ArrayBufferLike>>",
+      "returnDescription": "The 32-byte channel key.",
+      "parameters": [
+        {
+          "name": "encapsulation",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelEncapsulation",
+          "description": "Produced by encapsulateChannelKey() for this recipient.",
+          "optional": false
+        },
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "description": "The recipient's full keypair (must include the secret key).",
+          "optional": false
+        },
+        {
+          "name": "channelId",
+          "type": "string",
+          "description": "Must match the channelId used during encapsulation.",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "lineNumber": 98
+    },
+    {
+      "description": "Derive a key using HKDF-SHA512.",
+      "id": "chrislyons_dev_flarelette_crypto__src__derivekey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "deriveKey",
+      "type": "function",
+      "documentation": {
+        "summary": "Derive a key using HKDF-SHA512."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [
+        {
+          "name": "ikm",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "description": "Input key material (e.g. concatenated KEM shared secrets)",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "string",
+          "description": "Context string — must be unique per key purpose and derivation site",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "number",
+          "description": "Output length in bytes (default: 32)",
+          "optional": true,
+          "defaultValue": "32"
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/derive.ts",
+      "lineNumber": 20
+    },
+    {
+      "description": "Encrypt plaintext with a channel key.\n\nThe channel key (masterKey) is never serialised by this function — it is the\ncaller's responsibility to keep it in memory only and distribute it via\nencapsulateChannelKey(). Any byte sequence (document, metadata blob, message body)\ncan be encrypted as a single call; encrypt metadata and content together in a\nsingle plaintext rather than separately.",
+      "id": "chrislyons_dev_flarelette_crypto__src__encryptdoc",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "encryptDoc",
+      "type": "function",
+      "documentation": {
+        "summary": "Encrypt plaintext with a channel key.\n\nThe channel key (masterKey) is never serialised by this function — it is the\ncaller's responsibility to keep it in memory only and distribute it via\nencapsulateChannelKey(). Any byte sequence (document, metadata blob, message body)\ncan be encrypted as a single call; encrypt metadata and content together in a\nsingle plaintext rather than separately."
+      },
+      "returnType": "Promise<import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").EncryptedDoc>",
+      "parameters": [
+        {
+          "name": "plaintext",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "description": "Arbitrary bytes to encrypt.",
+          "optional": false
+        },
+        {
+          "name": "masterKey",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "description": "32-byte channel key from decapsulateChannelKey().",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "lineNumber": 43
+    },
+    {
+      "description": "Decrypt a document encrypted by encryptDoc().\n\nVerifies the HMAC-SHA512 MAC in constant time before attempting decryption.\nThrows immediately on MAC failure — no partial decryption, no timing oracle.",
+      "id": "chrislyons_dev_flarelette_crypto__src__decryptdoc",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "decryptDoc",
+      "type": "function",
+      "documentation": {
+        "summary": "Decrypt a document encrypted by encryptDoc().\n\nVerifies the HMAC-SHA512 MAC in constant time before attempting decryption.\nThrows immediately on MAC failure — no partial decryption, no timing oracle."
+      },
+      "returnType": "Promise<Uint8Array<ArrayBufferLike>>",
+      "parameters": [
+        {
+          "name": "doc",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").EncryptedDoc",
+          "description": "Produced by encryptDoc().",
+          "optional": false
+        },
+        {
+          "name": "masterKey",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "description": "The same 32-byte channel key used for encryption.",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "lineNumber": 73
+    },
+    {
+      "description": "Generate a hybrid ML-KEM-1024 + X25519 keypair.\n\nBoth key types are generated with cryptographically random seeds.\nReturns an opaque ChannelKeypairs handle — internal key bytes are not\naccessible to application code. Use getPublicKey() to obtain the shareable\npublic portion and wrapKeyBundle() to persist the full keypair.",
+      "id": "chrislyons_dev_flarelette_crypto__src__generatechannelkeypairs",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "generateChannelKeypairs",
+      "type": "function",
+      "documentation": {
+        "summary": "Generate a hybrid ML-KEM-1024 + X25519 keypair.\n\nBoth key types are generated with cryptographically random seeds.\nReturns an opaque ChannelKeypairs handle — internal key bytes are not\naccessible to application code. Use getPublicKey() to obtain the shareable\npublic portion and wrapKeyBundle() to persist the full keypair."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+      "parameters": [],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "lineNumber": 40
+    },
+    {
+      "description": "Extract the public portion of a keypair for sharing with recipients.\n\nThe returned ChannelPublicKey is safe to share out-of-band (Signal, QR code, etc.).\nIt contains only public key material — no secret key bytes.",
+      "id": "chrislyons_dev_flarelette_crypto__src__getpublickey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "getPublicKey",
+      "type": "function",
+      "documentation": {
+        "summary": "Extract the public portion of a keypair for sharing with recipients.\n\nThe returned ChannelPublicKey is safe to share out-of-band (Signal, QR code, etc.).\nIt contains only public key material — no secret key bytes."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelPublicKey",
+      "parameters": [
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "lineNumber": 58
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src__hybridencapsulate",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "hybridEncapsulate",
+      "type": "function",
+      "returnType": "{ kemCt: Uint8Array<ArrayBufferLike>; dhEphemeral: Uint8Array<ArrayBufferLike>; mlkemSs: Uint8Array<ArrayBufferLike>; dhSs: Uint8Array<ArrayBufferLike>; }",
+      "parameters": [
+        {
+          "name": "recipient",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelPublicKey",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "lineNumber": 78
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src__hybriddecapsulate",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "hybridDecapsulate",
+      "type": "function",
+      "returnType": "{ mlkemSs: Uint8Array<ArrayBufferLike>; dhSs: Uint8Array<ArrayBufferLike>; }",
+      "parameters": [
+        {
+          "name": "kemCt",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "dhEphemeral",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "lineNumber": 105
+    },
+    {
+      "description": "Convert a Uint8Array to a plain ArrayBuffer.\n\nWeb Crypto requires ArrayBuffer (not ArrayBufferLike) for all key and data\nparameters. Noble functions return Uint8Array<ArrayBufferLike>, which may\nbe backed by a SharedArrayBuffer. This ensures we always pass a plain\nArrayBuffer to satisfy both the DOM types and runtime requirements.",
+      "id": "chrislyons_dev_flarelette_crypto__src__toarraybuffer",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "toArrayBuffer",
+      "type": "function",
+      "documentation": {
+        "summary": "Convert a Uint8Array to a plain ArrayBuffer.\n\nWeb Crypto requires ArrayBuffer (not ArrayBufferLike) for all key and data\nparameters. Noble functions return Uint8Array<ArrayBufferLike>, which may\nbe backed by a SharedArrayBuffer. This ensures we always pass a plain\nArrayBuffer to satisfy both the DOM types and runtime requirements."
+      },
+      "returnType": "ArrayBuffer",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 28
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src__importaeskey",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "importAesKey",
+      "type": "function",
+      "returnType": "Promise<CryptoKey>",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "usage",
+          "type": "\"encrypt\" | \"decrypt\"",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 37
+    },
+    {
+      "description": "AES-256-GCM encrypt.\n\nReturns ciphertext with the 16-byte GCM auth tag appended.\nThe caller is responsible for generating a unique 12-byte IV per encryption.\nReusing an IV with the same key is catastrophic — this function does not enforce\nuniqueness; callers must generate IVs via randomIv().",
+      "id": "chrislyons_dev_flarelette_crypto__src__aesgcmencrypt",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "aesGcmEncrypt",
+      "type": "function",
+      "documentation": {
+        "summary": "AES-256-GCM encrypt.\n\nReturns ciphertext with the 16-byte GCM auth tag appended.\nThe caller is responsible for generating a unique 12-byte IV per encryption.\nReusing an IV with the same key is catastrophic — this function does not enforce\nuniqueness; callers must generate IVs via randomIv()."
+      },
+      "returnType": "Promise<Uint8Array<ArrayBufferLike>>",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "iv",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "plaintext",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 56
+    },
+    {
+      "description": "AES-256-GCM decrypt.\n\nThrows if the GCM auth tag is invalid. This is a secondary authentication check;\ncallers should validate the outer HMAC-SHA512 MAC before calling this.",
+      "id": "chrislyons_dev_flarelette_crypto__src__aesgcmdecrypt",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "aesGcmDecrypt",
+      "type": "function",
+      "documentation": {
+        "summary": "AES-256-GCM decrypt.\n\nThrows if the GCM auth tag is invalid. This is a secondary authentication check;\ncallers should validate the outer HMAC-SHA512 MAC before calling this."
+      },
+      "returnType": "Promise<Uint8Array<ArrayBufferLike>>",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "iv",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "ciphertext",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": true,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 76
+    },
+    {
+      "description": "Compute HMAC-SHA512.\n\nUsed as the outer MAC in Encrypt-then-MAC. The message should include both\nthe nonce and the ciphertext to prevent nonce-swapping attacks.",
+      "id": "chrislyons_dev_flarelette_crypto__src__hmacsha512",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "hmacSha512",
+      "type": "function",
+      "documentation": {
+        "summary": "Compute HMAC-SHA512.\n\nUsed as the outer MAC in Encrypt-then-MAC. The message should include both\nthe nonce and the ciphertext to prevent nonce-swapping attacks."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 100
+    },
+    {
+      "description": "Constant-time byte equality check.\n\nAlways use this — not ===, not a manual loop — when comparing MACs or secrets.\nTiming-safe comparison prevents MAC oracle attacks.",
+      "id": "chrislyons_dev_flarelette_crypto__src__constanttimeequal",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "constantTimeEqual",
+      "type": "function",
+      "documentation": {
+        "summary": "Constant-time byte equality check.\n\nAlways use this — not ===, not a manual loop — when comparing MACs or secrets.\nTiming-safe comparison prevents MAC oracle attacks."
+      },
+      "returnType": "boolean",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Uint8Array<ArrayBufferLike>",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 110
+    },
+    {
+      "description": "Generate a cryptographically random 12-byte IV for AES-GCM.",
+      "id": "chrislyons_dev_flarelette_crypto__src__randomiv",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "randomIv",
+      "type": "function",
+      "documentation": {
+        "summary": "Generate a cryptographically random 12-byte IV for AES-GCM."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 119
+    },
+    {
+      "description": "Concatenate Uint8Arrays into a single Uint8Array.",
+      "id": "chrislyons_dev_flarelette_crypto__src__concatbytes",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "concatBytes",
+      "type": "function",
+      "documentation": {
+        "summary": "Concatenate Uint8Arrays into a single Uint8Array."
+      },
+      "returnType": "Uint8Array<ArrayBufferLike>",
+      "parameters": [
+        {
+          "name": "arrays",
+          "type": "Uint8Array<ArrayBufferLike>[]",
+          "optional": true
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "lineNumber": 124
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__src___getkeypairinternal",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "_getKeypairInternal",
+      "type": "function",
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").KeypairInternal",
+      "parameters": [
+        {
+          "name": "kp",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types.ts",
+      "lineNumber": 40
+    },
+    {
+      "description": "An opaque handle wrapping a hybrid ML-KEM-1024 + X25519 keypair.\n\nCreate via generateChannelKeypairs(). Persist via wrapKeyBundle()/unwrapKeyBundle().\nDo not inspect or construct directly — internal layout is not guaranteed.",
+      "id": "chrislyons_dev_flarelette_crypto__src__channelkeypairs",
+      "componentId": "chrislyons_dev_flarelette_crypto__src",
+      "name": "ChannelKeypairs",
+      "type": "class",
+      "documentation": {
+        "summary": "An opaque handle wrapping a hybrid ML-KEM-1024 + X25519 keypair.\n\nCreate via generateChannelKeypairs(). Persist via wrapKeyBundle()/unwrapKeyBundle().\nDo not inspect or construct directly — internal layout is not guaranteed."
+      },
+      "visibility": "public",
+      "isAbstract": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types.ts",
+      "lineNumber": 32,
+      "metadata": {}
+    }
+  ],
+  "deployments": [],
+  "containerRelationships": [],
+  "componentRelationships": [
+    {
+      "description": "ChannelEncapsulation | ChannelPublicKey | ChannelKeypairs | EncryptedDoc | _getKeypairInternal",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "./types.js",
+      "stereotype": "type-import | import | type-import | import | import | type-import"
+    },
+    {
+      "description": "hybridEncapsulate | hybridDecapsulate",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "./kem.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports deriveKey",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "./derive.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "aesGcmEncrypt | aesGcmDecrypt | concatBytes | randomIv | hmacSha512 | constantTimeEqual",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "./symmetric.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hkdf",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/hashes/hkdf.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports sha512",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/hashes/sha2.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports ml_kem1024",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/post-quantum/ml-kem.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports x25519",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/curves/ed25519.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hmac",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/hashes/hmac.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports equalBytes",
+      "source": "chrislyons_dev_flarelette_crypto__src",
+      "destination": "@noble/curves/utils.js",
+      "stereotype": "import"
+    }
+  ],
+  "codeRelationships": [
+    {
+      "description": "imports ChannelEncapsulation",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./types.js:ChannelEncapsulation",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports ChannelPublicKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./types.js:ChannelPublicKey",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports ChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./types.js:ChannelKeypairs",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hybridEncapsulate",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./kem.js:hybridEncapsulate",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hybridDecapsulate",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./kem.js:hybridDecapsulate",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports deriveKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./derive.js:deriveKey",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmEncrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./symmetric.js:aesGcmEncrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmDecrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./symmetric.js:aesGcmDecrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports concatBytes",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./symmetric.js:concatBytes",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports randomIv",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/channel.ts",
+      "destination": "./symmetric.js:randomIv",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hkdf",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/derive.ts",
+      "destination": "@noble/hashes/hkdf.js:hkdf",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports sha512",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/derive.ts",
+      "destination": "@noble/hashes/sha2.js:sha512",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports EncryptedDoc",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./types.js:EncryptedDoc",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports deriveKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./derive.js:deriveKey",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmEncrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:aesGcmEncrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports aesGcmDecrypt",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:aesGcmDecrypt",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports hmacSha512",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:hmacSha512",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports constantTimeEqual",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:constantTimeEqual",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports concatBytes",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:concatBytes",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports randomIv",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/doc.ts",
+      "destination": "./symmetric.js:randomIv",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports ml_kem1024",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "destination": "@noble/post-quantum/ml-kem.js:ml_kem1024",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports x25519",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "destination": "@noble/curves/ed25519.js:x25519",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports ChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "destination": "./types.js:ChannelKeypairs",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports _getKeypairInternal",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "destination": "./types.js:_getKeypairInternal",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports ChannelPublicKey",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/kem.ts",
+      "destination": "./types.js:ChannelPublicKey",
+      "stereotype": "type-import"
+    },
+    {
+      "description": "imports hmac",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "destination": "@noble/hashes/hmac.js:hmac",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports sha512",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "destination": "@noble/hashes/sha2.js:sha512",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports equalBytes",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
+      "destination": "@noble/curves/utils.js:equalBytes",
+      "stereotype": "import"
+    }
+  ],
+  "deploymentRelationships": []
+}

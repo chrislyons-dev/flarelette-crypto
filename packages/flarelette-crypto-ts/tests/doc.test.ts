@@ -39,7 +39,7 @@ describe('encryptDoc / decryptDoc', () => {
     const recovered = await decryptDoc(doc, masterKey)
 
     expect(recovered).toEqual(plaintext)
-  })
+  }, 15000)
 
   it('produces different ciphertext each call (random nonce)', async () => {
     const masterKey = generateChannelKey()

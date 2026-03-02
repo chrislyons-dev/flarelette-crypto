@@ -1,0 +1,58 @@
+system:
+  name: flarelette-crypto
+  description: Post-quantum hybrid envelope encryption library
+
+project:
+  name: flarelette-crypto
+  description: Post-quantum hybrid envelope encryption library
+
+paths:
+  output: ./architecture
+  logs: ./architecture/logs
+  ir_out: ./architecture/flarelette-crypto-ir.json
+  dsl_out: ./architecture/flarelette-crypto.dsl
+  render_out: ./architecture/diagrams
+  docs_out: ./architecture
+allowedPluginPaths:
+  - ./plugins
+  - ./custom-plugins
+allowedAbsolutePaths:
+  - /users/chris/git/flarelette-crypto
+  - C:\users\chris\git\flarelette-crypto
+
+extractors:
+  - use: extractors/builtin/basic-node
+    inputs:
+      include:
+        - './packages/flarelette-crypto-ts/**/*.js'
+        - './packages/flarelette-crypto-ts/**/*.cjs'
+        - './packages/flarelette-crypto-ts/**/*.mjs'
+        - './packages/flarelette-crypto-ts/**/*.ts'
+      exclude:
+        - '**/node_modules/**'
+        - '**/dist/**'
+        - '**/build/**'
+        - '**/*.test.*'
+        - '**/*.spec.*'
+        - '**/tests/**'
+        - '**/vitest.config.ts'
+
+# ir json in, ir json out (or errors)
+validators:
+  - use: validators/builtin/base-validator
+
+# ir json in, dsl out
+generators:
+  - use: generators/builtin/structurizr
+
+# dsl in, images out
+# Renderers run sequentially - order matters!
+# 1. Export DSL to PlantUML/Mermaid
+# 2. Render PlantUML to PNG images
+renderers:
+  - use: renderers/builtin/structurizr-export
+  - use: renderers/builtin/plantuml-render
+
+# dsl & images in, (likely markdown) docs out
+docs:
+  - use: docs/builtin/markdown-docs
