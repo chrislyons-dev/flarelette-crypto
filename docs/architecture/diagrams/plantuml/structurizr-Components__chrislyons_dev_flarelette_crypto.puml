@@ -16,6 +16,20 @@ skinparam {
 
 hide stereotype
 
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.adapters>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #5d82a8
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.bin>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #5d82a8
+  roundCorner 20
+  shadowing false
+}
 skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.src>> {
   BackgroundColor #85bbf0
   FontColor #000000
@@ -31,6 +45,11 @@ skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
 
 rectangle "@chrislyons-dev/flarelette-crypto\n<size:10>[Container: Service]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
   rectangle "==src\n<size:10>[Component: module]</size>\n\nComponent inferred from directory: src" <<flarelettecrypto.chrislyonsdevflarelettecrypto.src>> as flarelettecrypto.chrislyonsdevflarelettecrypto.src
+  rectangle "==adapters\n<size:10>[Component: module]</size>\n\nComponent inferred from directory: adapters" <<flarelettecrypto.chrislyonsdevflarelettecrypto.adapters>> as flarelettecrypto.chrislyonsdevflarelettecrypto.adapters
+  rectangle "==bin\n<size:10>[Component: module]</size>\n\nComponent inferred from directory: bin" <<flarelettecrypto.chrislyonsdevflarelettecrypto.bin>> as flarelettecrypto.chrislyonsdevflarelettecrypto.bin
 }
 
+flarelettecrypto.chrislyonsdevflarelettecrypto.adapters -[#707070,thickness=2]-> flarelettecrypto.chrislyonsdevflarelettecrypto.src : "<color:#707070>ChannelKeypairs | _getKeypairInternal | exportPublicBundle | importPublicBundle | MLKEM_SECRET_KEY_BYTES | DH_KEY_BYTES | base64urlEncode | base64urlDecode"
+flarelettecrypto.chrislyonsdevflarelettecrypto.bin -[#707070,thickness=2]-> flarelettecrypto.chrislyonsdevflarelettecrypto.src : "<color:#707070>imports generateChannelKeypairs"
+flarelettecrypto.chrislyonsdevflarelettecrypto.bin -[#707070,thickness=2]-> flarelettecrypto.chrislyonsdevflarelettecrypto.adapters : "<color:#707070>imports keypairsToEnvVars"
 @enduml

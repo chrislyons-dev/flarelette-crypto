@@ -28,9 +28,11 @@
 
 ### Component Details
 
-| Component | Type     | Description                            | Code                                               |
-| --------- | -------- | -------------------------------------- | -------------------------------------------------- |
-| **src**   | `module` | Component inferred from directory: src | [View](./chrislyons_dev_flarelette_crypto__src.md) |
+| Component    | Type     | Description                                 | Code                                                    |
+| ------------ | -------- | ------------------------------------------- | ------------------------------------------------------- |
+| **src**      | `module` | Component inferred from directory: src      | [View](./chrislyons_dev_flarelette_crypto__src.md)      |
+| **adapters** | `module` | Component inferred from directory: adapters | [View](./chrislyons_dev_flarelette_crypto__adapters.md) |
+| **bin**      | `module` | Component inferred from directory: bin      | [View](./chrislyons_dev_flarelette_crypto__bin.md)      |
 
 ---
 

@@ -9,6 +9,13 @@ graph LR
 
       3("<div style='font-weight: bold'>src</div><div style='font-size: 70%; margin-top: 0px'>[Component: module]</div><div style='font-size: 80%; margin-top:10px'>Component inferred from<br />directory: src</div>")
       style 3 fill:#85bbf0,stroke:#5d82a8,color:#000000
+      4("<div style='font-weight: bold'>adapters</div><div style='font-size: 70%; margin-top: 0px'>[Component: module]</div><div style='font-size: 80%; margin-top:10px'>Component inferred from<br />directory: adapters</div>")
+      style 4 fill:#85bbf0,stroke:#5d82a8,color:#000000
+      5("<div style='font-weight: bold'>bin</div><div style='font-size: 70%; margin-top: 0px'>[Component: module]</div><div style='font-size: 80%; margin-top:10px'>Component inferred from<br />directory: bin</div>")
+      style 5 fill:#85bbf0,stroke:#5d82a8,color:#000000
     end
 
+    4-- "<div>ChannelKeypairs |<br />_getKeypairInternal |<br />exportPublicBundle |<br />importPublicBundle |<br />MLKEM_SECRET_KEY_BYTES |<br />DH_KEY_BYTES |<br />base64urlEncode |<br />base64urlDecode</div><div style='font-size: 70%'></div>" -->3
+    5-- "<div>imports<br />generateChannelKeypairs</div><div style='font-size: 70%'></div>" -->3
+    5-- "<div>imports keypairsToEnvVars</div><div style='font-size: 70%'></div>" -->4
   end

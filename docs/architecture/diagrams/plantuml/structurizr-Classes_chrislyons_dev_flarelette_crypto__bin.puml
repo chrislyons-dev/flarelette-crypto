@@ -1,0 +1,44 @@
+@startuml
+set separator none
+title flarelette-crypto - @chrislyons-dev/flarelette-crypto - Components
+
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 10
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+  defaultFontName "Arial"
+}
+
+hide stereotype
+
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.binmain>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.binparseArgs>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  BorderColor #2e6295
+  FontColor #2e6295
+  shadowing false
+}
+
+rectangle "@chrislyons-dev/flarelette-crypto\n<size:10>[Container: Service]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  rectangle "==bin.parseArgs\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.binparseArgs>> as flarelettecrypto.chrislyonsdevflarelettecrypto.binparseArgs
+  rectangle "==bin.main\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.binmain>> as flarelettecrypto.chrislyonsdevflarelettecrypto.binmain
+}
+
+@enduml

@@ -22,6 +22,20 @@
       "containerId": "chrislyons_dev_flarelette_crypto",
       "name": "src",
       "type": "module"
+    },
+    {
+      "description": "Component inferred from directory: adapters",
+      "id": "chrislyons_dev_flarelette_crypto__adapters",
+      "containerId": "chrislyons_dev_flarelette_crypto",
+      "name": "adapters",
+      "type": "module"
+    },
+    {
+      "description": "Component inferred from directory: bin",
+      "id": "chrislyons_dev_flarelette_crypto__bin",
+      "containerId": "chrislyons_dev_flarelette_crypto",
+      "name": "bin",
+      "type": "module"
     }
   ],
   "code": [
@@ -394,7 +408,7 @@
       "visibility": "private",
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 58
+      "lineNumber": 54
     },
     {
       "id": "chrislyons_dev_flarelette_crypto__src__deserializekeypairs",
@@ -412,7 +426,7 @@
       "visibility": "private",
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 72
+      "lineNumber": 68
     },
     {
       "description": "Encrypt a keypair bundle with a wrapping key.\n\nThe wrapping key is used as IKM for HKDF — it must be at least 32 bytes.\nTypically derived from a user passphrase (Argon2id/scrypt) or from another\nkey exchange. Do not use a low-entropy string directly.\n\nReturns a JSON-serialisable object — all byte fields are base64url strings.",
@@ -439,7 +453,7 @@
       "visibility": "public",
       "isAsync": true,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 104
+      "lineNumber": 102
     },
     {
       "description": "Decrypt a keypair bundle produced by wrapKeyBundle().\n\nVerifies the HMAC-SHA512 MAC in constant time before attempting decryption.\nThrows on MAC failure, wrong key, or any corrupt data — never returns a\npartially recovered keypair.",
@@ -466,7 +480,7 @@
       "visibility": "public",
       "isAsync": true,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 134
+      "lineNumber": 132
     },
     {
       "description": "In-memory KeyStore backed by a Map.\n\nStores the opaque ChannelKeypairs handle directly — no serialization overhead.\nUse in Node.js, Cloudflare Workers, and tests.\nData does not persist across process restarts.",
@@ -482,7 +496,7 @@
       "visibility": "public",
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 192
+      "lineNumber": 190
     },
     {
       "description": "IndexedDB-backed KeyStore.\n\nSerializes keypairs to 4,800-byte ArrayBuffers and stores them in an\nIndexedDB object store. Data persists across page reloads.\n\nUses lazy connection initialisation — the DB is opened on first use and\nthe connection is reused for subsequent operations.\n\nObject store name: 'keypairs'\nDB version: 1",
@@ -505,7 +519,7 @@
       "visibility": "public",
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 227
+      "lineNumber": 225
     },
     {
       "description": "Open the best available KeyStore for the current environment.\n\nReturns an IndexedDB store if `indexedDB` is available (browsers), or\na memory store (Node.js, Cloudflare Workers).",
@@ -527,7 +541,7 @@
       "visibility": "public",
       "isAsync": false,
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts",
-      "lineNumber": 317
+      "lineNumber": 318
     },
     {
       "description": "Convert a Uint8Array to a plain ArrayBuffer.\n\nWeb Crypto requires ArrayBuffer (not ArrayBufferLike) for all key and data\nparameters. Noble functions return Uint8Array<ArrayBufferLike>, which may\nbe backed by a SharedArrayBuffer. This ensures we always pass a plain\nArrayBuffer to satisfy both the DOM types and runtime requirements.",
@@ -762,6 +776,104 @@
       "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types.ts",
       "lineNumber": 32,
       "metadata": {}
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__adapters__resolveenvvar",
+      "componentId": "chrislyons_dev_flarelette_crypto__adapters",
+      "name": "resolveEnvVar",
+      "type": "function",
+      "returnType": "string",
+      "parameters": [
+        {
+          "name": "env",
+          "type": "Record<string, string>",
+          "optional": false
+        },
+        {
+          "name": "varName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "lineNumber": 39
+    },
+    {
+      "description": "Serialize a keypair to env var strings for use in Worker bindings.\n\nUse this to generate the values that go in wrangler.toml [vars] and secrets.\nThe CLI (npx flarelette-crypto-keygen) uses this internally — you typically\ndon't need to call it directly unless you're managing keypairs programmatically.",
+      "id": "chrislyons_dev_flarelette_crypto__adapters__keypairstoenvvars",
+      "componentId": "chrislyons_dev_flarelette_crypto__adapters",
+      "name": "keypairsToEnvVars",
+      "type": "function",
+      "documentation": {
+        "summary": "Serialize a keypair to env var strings for use in Worker bindings.\n\nUse this to generate the values that go in wrangler.toml [vars] and secrets.\nThe CLI (npx flarelette-crypto-keygen) uses this internally — you typically\ndon't need to call it directly unless you're managing keypairs programmatically."
+      },
+      "returnType": "{ FLARELETTE_CRYPTO_KEYPAIR_SK: string; FLARELETTE_CRYPTO_KEYPAIR_PK: string; }",
+      "parameters": [
+        {
+          "name": "keypairs",
+          "type": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "lineNumber": 55
+    },
+    {
+      "description": "Reconstruct a ChannelKeypairs from Worker env bindings.\n\nReads FLARELETTE_CRYPTO_KEYPAIR_SK and FLARELETTE_CRYPTO_KEYPAIR_PK (or their\n_NAME-indirected equivalents) and returns an opaque ChannelKeypairs handle.\n\nCall once per request (or cache the result). Throws immediately on any missing\nor malformed binding — fail-fast prevents silent authentication with a bad key.",
+      "id": "chrislyons_dev_flarelette_crypto__adapters__keypairsfromenv",
+      "componentId": "chrislyons_dev_flarelette_crypto__adapters",
+      "name": "keypairsFromEnv",
+      "type": "function",
+      "documentation": {
+        "summary": "Reconstruct a ChannelKeypairs from Worker env bindings.\n\nReads FLARELETTE_CRYPTO_KEYPAIR_SK and FLARELETTE_CRYPTO_KEYPAIR_PK (or their\n_NAME-indirected equivalents) and returns an opaque ChannelKeypairs handle.\n\nCall once per request (or cache the result). Throws immediately on any missing\nor malformed binding — fail-fast prevents silent authentication with a bad key."
+      },
+      "returnType": "import(\"C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types\").ChannelKeypairs",
+      "parameters": [
+        {
+          "name": "env",
+          "type": "Record<string, string>",
+          "description": "The Worker env object, or any Record<string, string> for testing.",
+          "optional": false
+        }
+      ],
+      "visibility": "public",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "lineNumber": 82
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__bin__parseargs",
+      "componentId": "chrislyons_dev_flarelette_crypto__bin",
+      "name": "parseArgs",
+      "type": "function",
+      "returnType": "{ alg: string; dotenv: boolean; }",
+      "parameters": [
+        {
+          "name": "argv",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/bin/keygen.ts",
+      "lineNumber": 35
+    },
+    {
+      "id": "chrislyons_dev_flarelette_crypto__bin__main",
+      "componentId": "chrislyons_dev_flarelette_crypto__bin",
+      "name": "main",
+      "type": "function",
+      "returnType": "void",
+      "parameters": [],
+      "visibility": "private",
+      "isAsync": false,
+      "filePath": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/bin/keygen.ts",
+      "lineNumber": 41
     }
   ],
   "deployments": [],
@@ -825,6 +937,24 @@
       "description": "imports equalBytes",
       "source": "chrislyons_dev_flarelette_crypto__src",
       "destination": "@noble/curves/utils.js",
+      "stereotype": "import"
+    },
+    {
+      "description": "ChannelKeypairs | _getKeypairInternal | exportPublicBundle | importPublicBundle | MLKEM_SECRET_KEY_BYTES | DH_KEY_BYTES | base64urlEncode | base64urlDecode",
+      "source": "chrislyons_dev_flarelette_crypto__adapters",
+      "destination": "chrislyons_dev_flarelette_crypto__src",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports generateChannelKeypairs",
+      "source": "chrislyons_dev_flarelette_crypto__bin",
+      "destination": "chrislyons_dev_flarelette_crypto__src",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports keypairsToEnvVars",
+      "source": "chrislyons_dev_flarelette_crypto__bin",
+      "destination": "chrislyons_dev_flarelette_crypto__adapters",
       "stereotype": "import"
     }
   ],
@@ -1127,6 +1257,66 @@
       "description": "imports equalBytes",
       "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/symmetric.ts",
       "destination": "@noble/curves/utils.js:equalBytes",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports ChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../types.js:ChannelKeypairs",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports _getKeypairInternal",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../types.js:_getKeypairInternal",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports exportPublicBundle",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../serialize.js:exportPublicBundle",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports importPublicBundle",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../serialize.js:importPublicBundle",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports MLKEM_SECRET_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../kem.js:MLKEM_SECRET_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports DH_KEY_BYTES",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../kem.js:DH_KEY_BYTES",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlEncode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../codec.js:base64urlEncode",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports base64urlDecode",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/adapters/workers.ts",
+      "destination": "../codec.js:base64urlDecode",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports generateChannelKeypairs",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/bin/keygen.ts",
+      "destination": "../kem.js:generateChannelKeypairs",
+      "stereotype": "import"
+    },
+    {
+      "description": "imports keypairsToEnvVars",
+      "source": "C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/bin/keygen.ts",
+      "destination": "../adapters/workers.js:keypairsToEnvVars",
       "stereotype": "import"
     }
   ],

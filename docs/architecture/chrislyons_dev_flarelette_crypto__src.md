@@ -310,7 +310,7 @@ never returns a partial or zero-initialized key.
 | -------------- | ----------------------------- | --- | ------------ | ------------------------------------------------------------------------------------ |
 | **Type**       | `function`                    |
 | **Visibility** | `private`                     |
-| **Returns**    | `Uint8Array<ArrayBufferLike>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:58` |
+| **Returns**    | `Uint8Array<ArrayBufferLike>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:54` |
 
 **Parameters:**
 
@@ -324,7 +324,7 @@ never returns a partial or zero-initialized key.
 | -------------- | -------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------ |
 | **Type**       | `function`                                                                                               |
 | **Visibility** | `private`                                                                                                |
-| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:72` |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:68` |
 
 **Parameters:**
 
@@ -346,7 +346,7 @@ Returns a JSON-serialisable object — all byte fields are base64url strings.
 | -------------- | ---------- | --- | ----------- | --------------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
 | **Type**       | `function` |
 | **Visibility** | `public`   |
-| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").WrappedBundle>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:104` |
+| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").WrappedBundle>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:102` |
 
 **Parameters:**
 
@@ -366,7 +366,7 @@ partially recovered keypair.
 | -------------- | ---------- | --- | ----------- | ----------------------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
 | **Type**       | `function` |
 | **Visibility** | `public`   |
-| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:134` |
+| **Async**      | Yes        |     | **Returns** | `Promise<import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/types").ChannelKeypairs>` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:132` |
 
 **Parameters:**
 
@@ -386,7 +386,7 @@ Data does not persist across process restarts.
 | -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
 | **Type**       | `function`                                                                                        |
 | **Visibility** | `public`                                                                                          |
-| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:192` |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:190` |
 
 ---
 
@@ -407,7 +407,7 @@ DB version: 1
 | -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
 | **Type**       | `function`                                                                                        |
 | **Visibility** | `public`                                                                                          |
-| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:227` |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:225` |
 
 **Parameters:**
 
@@ -426,7 +426,7 @@ a memory store (Node.js, Cloudflare Workers).
 | -------------- | ------------------------------------------------------------------------------------------------- | --- | ------------ | ------------------------------------------------------------------------------------- |
 | **Type**       | `function`                                                                                        |
 | **Visibility** | `public`                                                                                          |
-| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:317` |
+| **Returns**    | `import("C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store").KeyStore` |     | **Location** | `C:/Users/chris/git/flarelette-crypto/packages/flarelette-crypto-ts/src/store.ts:318` |
 
 **Parameters:**
 

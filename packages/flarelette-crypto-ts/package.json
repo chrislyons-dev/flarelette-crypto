@@ -1,6 +1,6 @@
 {
   "name": "@chrislyons-dev/flarelette-crypto",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "Post-quantum hybrid envelope encryption for Cloudflare Workers, browsers, and Node.js",
   "keywords": [
@@ -27,10 +27,17 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "flarelette-crypto-keygen": "./dist/bin/keygen.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./adapters/workers": {
+      "types": "./dist/adapters/workers.d.ts",
+      "default": "./dist/adapters/workers.js"
     },
     "./package.json": "./package.json"
   },

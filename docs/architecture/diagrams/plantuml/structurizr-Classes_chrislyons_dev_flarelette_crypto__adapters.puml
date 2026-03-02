@@ -1,0 +1,52 @@
+@startuml
+set separator none
+title flarelette-crypto - @chrislyons-dev/flarelette-crypto - Components
+
+left to right direction
+skinparam ranksep 20
+skinparam nodesep 10
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+  defaultFontName "Arial"
+}
+
+hide stereotype
+
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsFromEnv>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsToEnvVars>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto.adaptersresolveEnvVar>> {
+  BackgroundColor #d4e8fc
+  FontColor #000000
+  BorderColor #94a2b0
+  roundCorner 20
+  shadowing false
+}
+skinparam rectangle<<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  BorderColor #2e6295
+  FontColor #2e6295
+  shadowing false
+}
+
+rectangle "@chrislyons-dev/flarelette-crypto\n<size:10>[Container: Service]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto>> {
+  rectangle "==adapters.resolveEnvVar\n<size:10>[Component: function]</size>" <<flarelettecrypto.chrislyonsdevflarelettecrypto.adaptersresolveEnvVar>> as flarelettecrypto.chrislyonsdevflarelettecrypto.adaptersresolveEnvVar
+  rectangle "==adapters.keypairsToEnvVars\n<size:10>[Component: function]</size>\n\nSerialize a keypair to env var strings for use in Worker bindings. Use this to generate the values that go in wrangler.toml [vars] and secrets. The CLI (npx flarelette-crypto-keygen) uses this internally — you typically don't need to call it directly unless you're managing keypairs programmatically." <<flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsToEnvVars>> as flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsToEnvVars
+  rectangle "==adapters.keypairsFromEnv\n<size:10>[Component: function]</size>\n\nReconstruct a ChannelKeypairs from Worker env bindings. Reads FLARELETTE_CRYPTO_KEYPAIR_SK and FLARELETTE_CRYPTO_KEYPAIR_PK (or their _NAME-indirected equivalents) and returns an opaque ChannelKeypairs handle. Call once per request (or cache the result). Throws immediately on any missing or malformed binding — fail-fast prevents silent authentication with a bad key." <<flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsFromEnv>> as flarelettecrypto.chrislyonsdevflarelettecrypto.adapterskeypairsFromEnv
+}
+
+@enduml

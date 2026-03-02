@@ -1,0 +1,18 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram [" "]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 2 [" "]
+      style 2 fill:#ffffff,stroke:#2e6295,color:#2e6295
+
+      37("<div style='font-weight: bold'>adapters.resolveEnvVar</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div>")
+      style 37 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      38("<div style='font-weight: bold'>adapters.keypairsToEnvVars</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Serialize a keypair to env<br />var strings for use in Worker<br />bindings. Use this to<br />generate the values that go<br />in wrangler.toml [vars] and<br />secrets. The CLI (npx<br />flarelette-crypto-keygen)<br />uses this internally — you<br />typically don't need to call<br />it directly unless you're<br />managing keypairs<br />programmatically.</div>")
+      style 38 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+      39("<div style='font-weight: bold'>adapters.keypairsFromEnv</div><div style='font-size: 70%; margin-top: 0px'>[Component: function]</div><div style='font-size: 80%; margin-top:10px'>Reconstruct a ChannelKeypairs<br />from Worker env bindings.<br />Reads<br />FLARELETTE_CRYPTO_KEYPAIR_SK<br />and<br />FLARELETTE_CRYPTO_KEYPAIR_PK<br />(or their _NAME-indirected<br />equivalents) and returns an<br />opaque ChannelKeypairs<br />handle. Call once per request<br />(or cache the result). Throws<br />immediately on any missing or<br />malformed binding — fail-fast<br />prevents silent<br />authentication with a bad<br />key.</div>")
+      style 39 fill:#d4e8fc,stroke:#94a2b0,color:#000000
+    end
+
+  end

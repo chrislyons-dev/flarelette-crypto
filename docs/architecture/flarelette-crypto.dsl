@@ -19,6 +19,14 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
                     description "Component inferred from directory: src"
                     technology "module"
                 }
+                chrislyons_dev_flarelette_crypto__adapters = component "adapters" {
+                    description "Component inferred from directory: adapters"
+                    technology "module"
+                }
+                chrislyons_dev_flarelette_crypto__bin = component "bin" {
+                    description "Component inferred from directory: bin"
+                    technology "module"
+                }
 
                 # Code elements (classes, functions)
                 chrislyons_dev_flarelette_crypto__src__generatechannelkey = component "src.generateChannelKey" {
@@ -170,6 +178,33 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
                     technology "class"
                     tags "Code"
                 }
+                chrislyons_dev_flarelette_crypto__adapters__resolveenvvar = component "adapters.resolveEnvVar" {
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__adapters__keypairstoenvvars = component "adapters.keypairsToEnvVars" {
+                    description "Serialize a keypair to env var strings for use in Worker bindings. Use this to generate the values that go in wrangler.toml [vars] and secrets. The CLI (npx flarelette-crypto-keygen) uses this internally — you typically don't need to call it directly unless you're managing keypairs programmatically."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__adapters__keypairsfromenv = component "adapters.keypairsFromEnv" {
+                    description "Reconstruct a ChannelKeypairs from Worker env bindings. Reads FLARELETTE_CRYPTO_KEYPAIR_SK and FLARELETTE_CRYPTO_KEYPAIR_PK (or their _NAME-indirected equivalents) and returns an opaque ChannelKeypairs handle. Call once per request (or cache the result). Throws immediately on any missing or malformed binding — fail-fast prevents silent authentication with a bad key."
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__bin__parseargs = component "bin.parseArgs" {
+                    technology "function"
+                    tags "Code"
+                }
+                chrislyons_dev_flarelette_crypto__bin__main = component "bin.main" {
+                    technology "function"
+                    tags "Code"
+                }
+
+                # Component relationships
+                chrislyons_dev_flarelette_crypto__adapters -> chrislyons_dev_flarelette_crypto__src "ChannelKeypairs | _getKeypairInternal | exportPublicBundle | importPublicBundle | MLKEM_SECRET_KEY_BYTES | DH_KEY_BYTES | base64urlEncode | base64urlDecode"
+                chrislyons_dev_flarelette_crypto__bin -> chrislyons_dev_flarelette_crypto__src "imports generateChannelKeypairs"
+                chrislyons_dev_flarelette_crypto__bin -> chrislyons_dev_flarelette_crypto__adapters "imports keypairsToEnvVars"
             }
 
         }
@@ -189,6 +224,8 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
 
         component chrislyons_dev_flarelette_crypto "Components__chrislyons_dev_flarelette_crypto" {
             include chrislyons_dev_flarelette_crypto__src
+            include chrislyons_dev_flarelette_crypto__adapters
+            include chrislyons_dev_flarelette_crypto__bin
             exclude "element.tag==Code"
             autoLayout lr 100 100
         }
@@ -226,6 +263,21 @@ workspace "flarelette-crypto" "Post-quantum hybrid envelope encryption library" 
             include chrislyons_dev_flarelette_crypto__src__concatbytes
             include chrislyons_dev_flarelette_crypto__src___getkeypairinternal
             include chrislyons_dev_flarelette_crypto__src__channelkeypairs
+            autoLayout lr 100 100
+        }
+
+
+        component chrislyons_dev_flarelette_crypto "Classes_chrislyons_dev_flarelette_crypto__adapters" {
+            include chrislyons_dev_flarelette_crypto__adapters__resolveenvvar
+            include chrislyons_dev_flarelette_crypto__adapters__keypairstoenvvars
+            include chrislyons_dev_flarelette_crypto__adapters__keypairsfromenv
+            autoLayout lr 100 100
+        }
+
+
+        component chrislyons_dev_flarelette_crypto "Classes_chrislyons_dev_flarelette_crypto__bin" {
+            include chrislyons_dev_flarelette_crypto__bin__parseargs
+            include chrislyons_dev_flarelette_crypto__bin__main
             autoLayout lr 100 100
         }
 
