@@ -1,6 +1,18 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: '@chrislyons-dev/flarelette-crypto/adapters/workers',
+        replacement: '/packages/flarelette-crypto-ts/src/adapters/workers.ts',
+      },
+      {
+        find: '@chrislyons-dev/flarelette-crypto',
+        replacement: '/packages/flarelette-crypto-ts/src/index.ts',
+      },
+    ],
+  },
   test: {
     globals: true,
     environment: 'node',

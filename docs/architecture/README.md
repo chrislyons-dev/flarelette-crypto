@@ -1,7 +1,7 @@
 # <img src="../images/archlette-stainedglassA-light.png" alt="" height="28" width="28" style="vertical-align:middle"> flarelette-crypto
 
 **Architecture Documentation**
-Generated 2026-03-01 21:41:30
+Generated 2026-03-02 20:15:34
 
 ## Overview
 
